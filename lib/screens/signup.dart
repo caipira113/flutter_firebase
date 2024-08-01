@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:flutter_firebase/providers/auth.dart';
+import 'package:provider/provider.dart';
 
 class Signup extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
