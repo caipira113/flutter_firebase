@@ -12,9 +12,6 @@ class Signin extends StatelessWidget {
     final authProvider = Provider.of<CustomAuthProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Signin"),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
