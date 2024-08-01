@@ -30,7 +30,7 @@ class Chat extends StatelessWidget {
                 child: StreamBuilder<QuerySnapshot>(
                   stream: _firestoreService.getMessage(),
                   builder: (context, snapshot) {
-                    if (snapshot.hasData) {
+                    if (!snapshot.hasData) {
                       return const Center(child: CircularProgressIndicator());
                     }
                     final messages = snapshot.data!.docs;
@@ -41,7 +41,7 @@ class Chat extends StatelessWidget {
                           final message = messages[index];
                           return ListTile(
                             title: Text(message["text"]),
-                            subtitle: Text(message['userId']),
+                            subtitle: Text(message['email']),
                           );
                         }
                     );
@@ -58,11 +58,14 @@ class Chat extends StatelessWidget {
                 )
                 ),
                 IconButton(onPressed: () {
-                  if (_controller.text.isNotEmpty &&
-                      authProvider.user != null) {
-                    _firestoreService.sendMessage(
-                        _controller.text, authProvider.user!.uid);
-                    _controller.clear();
+                  if (_controller.text.isNotEmpty) {
+                    final user = authProvider.user;
+                    if (user != null) {
+                      final email = user.email ?? 'Anonymous';
+                      _firestoreService.sendMessage(
+                          _controller.text, authProvider.user!.uid, email);
+                      _controller.clear();
+                    }
                   }
                 }, icon: const Icon(Icons.send))
               ],
