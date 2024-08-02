@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/providers/auth.dart';
 import 'package:flutter_firebase/providers/theme.dart';
-import 'package:flutter_firebase/screens/chat.dart';
+import 'package:flutter_firebase/screens/room_list.dart';
 import 'package:flutter_firebase/screens/signin.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
@@ -40,10 +40,9 @@ class MyApp extends StatelessWidget {
                     title: const Text('Flutter Messenger'),
                     actions: [
                       IconButton(
-                        icon: Icon(Icons.brightness_6),
+                        icon: Icon(themeProvider.themeMode == ThemeMode.dark ? Icons.brightness_7 : Icons.brightness_2),
                         onPressed: () {
-                          final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
-                          themeProvider.toggleTheme(!isDarkMode);
+                          themeProvider.toggleTheme(themeProvider.themeMode != ThemeMode.dark);
                         },
                       ),
                       if (FirebaseAuth.instance.currentUser != null) // Check if the user is logged in
@@ -55,7 +54,7 @@ class MyApp extends StatelessWidget {
                         ),
                     ],
                   ),
-                  body: authProvider.user == null ? Signin() : Chat(),
+                  body: authProvider.user == null ? Signin() : RoomList(),
                 );
               },
             ),

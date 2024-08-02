@@ -11,14 +11,6 @@ class CustomAuthProvider with ChangeNotifier {
     _auth.authStateChanges().listen(_onAuthStateChanged);
   }
 
-  Future<void> signInAnonymously() async {
-    try {
-      await _auth.signInAnonymously();
-    } catch (e) {
-      print(e);
-    }
-  }
-
   Future<void> signInWithEmailAndPassword(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
